@@ -1,4 +1,4 @@
-name: Deploy1
+name: Deploy
 
 on:
   push:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-node@v4
         with:
@@ -18,7 +18,16 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - name: Deploy via SCP
+      - name: 🧹 Clean server
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            rm -rf /home/santapr/santa-prize.dp.ua/www/*
+
+      - name: 📤 Upload files
         uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HOST }}
