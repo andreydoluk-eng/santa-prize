@@ -23,9 +23,9 @@ final class TelegramNotifier
         $phoneClean = preg_replace('/[^+\d]/', '', $phone);
         $phoneLine = $phoneClean;
 
-        $message = "🔔 <b>Заявка з сайту SANTA-PRIZE</b>\n\n" .
+        $message = "<b>Заявка з сайту SANTA-PRIZE</b>\n\n" .
             "👤 {$application->name}\n\n" .
-            "📞 <b></b> {$phoneLine}\n\n" .
+            "📞 {$phoneLine}\n\n" .
             "💬 " . ($application->message ?: '—');
 
         $params = [

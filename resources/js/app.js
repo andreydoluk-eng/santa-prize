@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         body: JSON.stringify({
                             name: name,
                             phone: phone,
-                            message: `Замовлення з сайту: ${title}`,
+                            message: `Сторінка: ${title}`,
                             source_url: window.location.href
                         })
                     })
@@ -105,7 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
                         theme: 'dark',
                         title: 'Успішно!',
                         text: 'Ваша заявка успішно надіслана. Ми зв\'яжемося з вами найближчим часом.',
-                        icon: 'success'
+                        icon: 'success',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
                     });
                 }
             });
@@ -149,31 +155,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 },
                 body: formData
             })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(json => {
-                        const msg = json.errors ? Object.values(json.errors)[0][0] : (json.message || 'Помилка сервера');
-                        throw new Error(msg);
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(json => {
+                            const msg = json.errors ? Object.values(json.errors)[0][0] : (json.message || 'Помилка сервера');
+                            throw new Error(msg);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    contactForm.reset();
+                    Swal.fire({
+                        theme: 'dark',
+                        title: 'Успішно!',
+                        text: 'Ваша заявка успішно надіслана. Ми зв\'яжемося з вами найближчим часом.',
+                        icon: 'success',
+                        timer: 5000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
                     });
-                }
-                return response.json();
-            })
-            .then(() => {
-                contactForm.reset();
-                Swal.fire({
-                    theme: 'dark',
-                    title: 'Успішно!',
-                    text: 'Ваша заявка успішно надіслана. Ми зв\'яжемося з вами найближчим часом.',
-                    icon: 'success'
+                })
+                .catch(error => {
+                    Swal.fire({
+                        title: 'Помилка!',
+                        text: error.message,
+                        icon: 'error'
+                    });
                 });
-            })
-            .catch(error => {
-                Swal.fire({
-                    title: 'Помилка!',
-                    text: error.message,
-                    icon: 'error'
-                });
-            });
         });
     }
 
