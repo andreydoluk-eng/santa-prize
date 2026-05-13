@@ -12,6 +12,13 @@
                 height="1080" class="w-full h-full object-cover">
             <div class="absolute inset-0 bg-background/60"></div>
         </div>
+@php
+    $settings = \Illuminate\Support\Facades\Storage::exists('settings.json') 
+        ? json_decode(\Illuminate\Support\Facades\Storage::get('settings.json'), true) 
+        : [];
+    $hero_subtitle = $settings['hero_subtitle'] ?? 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт.';
+    $about_text = $settings['about_text'] ?? 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт — від земляних до висотних та дорожніх.';
+@endphp
 
         <!-- Content -->
         <div class="relative z-10 container mx-auto px-6 md:px-12">
@@ -26,7 +33,7 @@
 
             <p
                 class="text-muted-foreground text-base md:text-lg max-w-lg leading-relaxed mb-14 animate-on-scroll delay-800">
-                Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт.
+                {{ $hero_subtitle }}
             </p>
 
             <div class="flex items-center gap-6 animate-on-scroll delay-1000">
@@ -48,8 +55,7 @@
             <div class="max-w-2xl animate-on-scroll">
                 <p class="text-primary text-[11px] tracking-[0.5em] uppercase mb-10">Про компанію</p>
                 <h2 class="text-2xl md:text-4xl font-light text-foreground leading-[1.4] tracking-wide">
-                    Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт — від земляних
-                    до висотних та дорожніх.
+                    {{ $about_text }}
                 </h2>
             </div>
         </div>

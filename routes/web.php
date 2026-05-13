@@ -33,6 +33,20 @@ Route::post('/applications', [ApplicationController::class, 'store'])->name('app
 Route::middleware([Authenticate::class])->group(function () {
     Route::post('/admin/reorder/{model}', \App\Http\Controllers\MoonShine\ReorderController::class)
         ->name('moonshine.reorder');
+
+    Route::post('/admin/update-settings', function (\Illuminate\Http\Request $request) {
+        $settings = \Illuminate\Support\Facades\Storage::exists('settings.json')
+            ? json_decode(\Illuminate\Support\Facades\Storage::get('settings.json'), true)
+            : [];
+        $settings['email'] = $request->input('email', 'info@santa-prize.com');
+        $settings['phone'] = $request->input('phone', '+380 (XX) XXX-XX-XX');
+        $settings['hero_subtitle'] = $request->input('hero_subtitle', 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт.');
+        $settings['about_text'] = $request->input('about_text', 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт — від земляних до висотних та дорожніх.');
+        \Illuminate\Support\Facades\Storage::put('settings.json', json_encode($settings, JSON_PRETTY_PRINT));
+
+        \MoonShine\Laravel\MoonShineUI::toast('Налаштування збережено!', \MoonShine\Support\Enums\ToastType::SUCCESS);
+        return back();
+    })->name('admin.update-settings');
 });
 
 Route::get('/sitemap.xml', function () {
@@ -44,9 +58,9 @@ Route::get('/sitemap.xml', function () {
             route('services.index'),
             route('projects.index'),
         ])
-            ->merge(Equipment::query()->pluck('slug')->map(fn (string $slug): string => route('equipments.show', $slug)))
-            ->merge(Service::query()->pluck('slug')->map(fn (string $slug): string => route('services.show', $slug)))
-            ->merge(Project::query()->pluck('slug')->map(fn (string $slug): string => route('projects.show', $slug)))
+            ->merge(Equipment::query()->pluck('slug')->map(fn(string $slug): string => route('equipments.show', $slug)))
+            ->merge(Service::query()->pluck('slug')->map(fn(string $slug): string => route('services.show', $slug)))
+            ->merge(Project::query()->pluck('slug')->map(fn(string $slug): string => route('projects.show', $slug)))
             ->unique()
             ->values();
 

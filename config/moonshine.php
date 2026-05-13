@@ -109,7 +109,7 @@ return [
     'locale' => 'uk',
     'locale_key' => ChangeLocale::KEY,
     'locales' => [
-        'uk'
+        // 'uk' - закоментовано, щоб приховати перемикач мов
     ],
 
     // Media Manager

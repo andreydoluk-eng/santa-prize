@@ -19,14 +19,22 @@
                     Зв'яжіться з нами
                 </h2>
 
+                @php
+                    $settings = \Illuminate\Support\Facades\Storage::exists('settings.json') 
+                        ? json_decode(\Illuminate\Support\Facades\Storage::get('settings.json'), true) 
+                        : [];
+                    $email = $settings['email'] ?? 'info@santa-prize.com';
+                    $phone = $settings['phone'] ?? '+380 (XX) XXX-XX-XX';
+                @endphp
+
                 <div class="space-y-8">
                     <div>
                         <p class="text-muted-foreground/50 text-[11px] tracking-[0.3em] uppercase mb-3">Телефон</p>
-                        <p class="text-foreground text-lg font-light">+380 (XX) XXX-XX-XX</p>
+                        <p class="text-foreground text-lg font-light">{{ $phone }}</p>
                     </div>
                     <div>
                         <p class="text-muted-foreground/50 text-[11px] tracking-[0.3em] uppercase mb-3">Email</p>
-                        <p class="text-foreground text-lg font-light">info@santa-prize.com</p>
+                        <p class="text-foreground text-lg font-light">{{ $email }}</p>
                     </div>
                 </div>
             </div>

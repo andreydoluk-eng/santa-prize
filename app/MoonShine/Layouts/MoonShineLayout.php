@@ -23,6 +23,7 @@ use MoonShine\MenuManager\MenuDivider;
 
 final class MoonShineLayout extends AppLayout
 {
+
     /**
      * @var null|class-string<PaletteContract>
      */
