@@ -23,37 +23,16 @@ final class TelegramNotifier
         $phoneClean = preg_replace('/[^+\d]/', '', $phone);
         $phoneLine = $phoneClean;
 
-        $sourceUrl = $application->source_url ?: null;
-        $urlLine = $sourceUrl
-            ? "🌐 Сторінка: <a href=\"{$sourceUrl}\">{$sourceUrl}</a>"
-            : "🌐 Сторінка: —";
-
-        $message = "🔔 <b>аявка з сайту SANTA-PRIZE</b>\n\n" .
+        $message = "🔔 <b>Заявка з сайту SANTA-PRIZE</b>\n\n" .
             "👤 <b>Ім'я:</b> {$application->name}\n\n" .
             "📞 <b>Телефон:</b> {$phoneLine}\n\n" .
-            "💬 " . ($application->message ?: '—') . "\n\n" .
-            $urlLine . "\n\n";
-
-        $keyboard = null;
-        if ($sourceUrl && !str_contains($sourceUrl, 'localhost')) {
-            $keyboard = [
-                'inline_keyboard' => [
-                    [
-                        ['text' => '🌐 Відкрити сторінку', 'url' => $sourceUrl],
-                    ],
-                ],
-            ];
-        }
+            "💬 " . ($application->message ?: '—');
 
         $params = [
             'chat_id' => $chatId,
             'text' => $message,
             'parse_mode' => 'HTML',
         ];
-
-        if ($keyboard) {
-            $params['reply_markup'] = json_encode($keyboard);
-        }
 
         try {
             $response = Http::timeout(15)->post("https://api.telegram.org/bot{$token}/sendMessage", $params);
