@@ -47,9 +47,12 @@ final class ServiceFormPage extends FormPage
                     [
                         Box::make([
 
-                            Text::make('SEO title', 'seo_title'),
-                            Text::make('SEO keywords', 'seo_keywords'),
-                            Textarea::make('SEO description', 'seo_description'),
+                            Text::make('SEO title', 'seo_title')
+                                ->hint('Залиште порожнім для автоматичної генерації за допомогою ШІ (Gemini) для Нікопольського району'),
+                            Text::make('SEO keywords', 'seo_keywords')
+                                ->hint('Залиште порожнім для автоматичної генерації за допомогою ШІ'),
+                            Textarea::make('SEO description', 'seo_description')
+                                ->hint('Залиште порожнім для автоматичної генерації за допомогою ШІ'),
 
                             InterventionImage::make('Головне зображення', 'main_image')
                                 ->dir('equipments')
