@@ -129,9 +129,21 @@
                 @foreach($services as $service)
                     <div class="group relative overflow-hidden border border-border animate-on-scroll"
                         style="transition-delay: {{ 150 + $loop->index * 80 }}ms">
-                        <img src="{{ $service->main_image ? asset('storage/' . $service->main_image) : asset('images/template/service-' . (($loop->index % 6) + 1) . '.jpg') }}"
-                            alt="{{ $service->title }}" loading="lazy" width="1024" height="768"
-                            class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.04]">
+
+                        <picture>
+                            @if($service->main_image)
+                                <source
+                                    srcset="{{ asset('storage/' . preg_replace('/\.[^.]+$/', '', $service->main_image) . '.webp') }}"
+                                    type="image/webp">
+                                <img src="{{ asset('storage/' . $service->main_image) }}" alt="{{ $service->title }}" loading="lazy"
+                                    width="800" height="600"
+                                    class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                            @else
+                                <img src="{{ asset('images/template/service-' . (($loop->index % 3) + 1) . '.jpg') }}"
+                                    alt="{{ $service->title }}" loading="lazy" width="800" height="600"
+                                    class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                            @endif
+                        </picture>
                         <div
                             class="absolute inset-0 bg-gradient-to-t from-background/90 via-background/40 to-background/10 group-hover:from-background/95 transition-colors duration-500">
                         </div>
@@ -171,9 +183,24 @@
                     <div class="group relative overflow-hidden animate-on-scroll"
                         style="transition-delay: {{ $index * 200 }}ms">
                         <a href="{{ route('projects.show', $project->slug ?? '') }}" class="block">
-                            <img src="{{ $project->main_image ? asset('storage/' . $project->main_image) : asset('images/template/project-' . (($loop->index % 3) + 1) . '.jpg') }}"
-                                alt="{{ $project->title }}" loading="lazy" width="800" height="600"
-                                class="w-full aspect-[3/2] object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                            <picture>
+                                @if($project->main_image)
+                                    <source
+                                        srcset="{{ asset('storage/' . preg_replace('/\.[^.]+$/', '', $project->main_image) . '.webp') }}"
+                                        type="image/webp">
+                                    <img src="{{ asset('storage/' . $project->main_image) }}" alt="{{ $project->title }}"
+                                        loading="lazy" width="800" height="600"
+                                        class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                @else
+                                    <img src="{{ asset('images/template/equipment-' . (($loop->index % 3) + 1) . '.jpg') }}"
+                                        alt="{{ $item->title }}" loading="lazy" width="800" height="600"
+                                        class="w-full aspect-[4/3] object-cover transition-transform duration-700 group-hover:scale-[1.03]">
+                                @endif
+                            </picture>
+
+
+
+
                             <div
                                 class="absolute inset-0 bg-background/30 group-hover:bg-background/10 transition-colors duration-500">
                             </div>
