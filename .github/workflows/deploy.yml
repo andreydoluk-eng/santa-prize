@@ -9,19 +9,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: 🧱 Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 22.12.0
+          node-version: 22
 
-      - name: 🔍 Check Node version
-        run: node -v
+      - run: npm install
+      - run: npm run build
 
-      - name: 📦 Install deps
-        run: npm install
-
-      - name: ⚡ Build Vite
-        run: npm run build
+      - uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          port: 22
+          source: "."
+          target: "/home/santapr/santa-prize.dp.ua/www"
