@@ -21,7 +21,7 @@ final class TelegramNotifier
 
         $phone = $application->phone;
         $phoneClean = preg_replace('/[^+\d]/', '', $phone);
-        $phoneLine = "<code>{$phoneClean}</code>";
+        $phoneLine = $phoneClean;
 
         $sourceUrl = $application->source_url ?: null;
         $urlLine = $sourceUrl
