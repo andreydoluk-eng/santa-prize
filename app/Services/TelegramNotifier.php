@@ -25,7 +25,7 @@ final class TelegramNotifier
 
         $message = "🔔 <b>Заявка з сайту SANTA-PRIZE</b>\n\n" .
             "👤 {$application->name}\n\n" .
-            "📞 {$phoneLine}\n\n" .
+            "📞 <b></b> {$phoneLine}\n\n" .
             "💬 " . ($application->message ?: '—');
 
         $params = [
