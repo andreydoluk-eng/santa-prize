@@ -111,4 +111,9 @@ return [
     'locales' => [
         'uk'
     ],
+
+    // Media Manager
+    'media_manager' => [
+        'auto_menu' => false,
+    ],
 ];

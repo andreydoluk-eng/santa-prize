@@ -56,4 +56,14 @@ final class MoonShineLayout extends AppLayout
 
         // $colorManager->primary('#00000');
     }
+
+    protected function getFooterCopyright(): string
+    {
+        return 'Santa-Prize © ' . date('Y');
+    }
+
+    protected function getFooterMenu(): array
+    {
+        return [];
+    }
 }
