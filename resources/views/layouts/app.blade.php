@@ -3,8 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SANTA-PRIZE — Оренда спецтехніки та професійні послуги</title>
-    <meta name="description" content="SANTA-PRIZE — оренда будівельної та спеціалізованої техніки для виконання різноманітних робіт." />
+    <title>{{ $seoTitle ?? 'SANTA-PRIZE — Оренда спецтехніки та професійні послуги' }}</title>
+    <meta name="description" content="{{ $seoDescription ?? 'SANTA-PRIZE — оренда будівельної та спеціалізованої техніки для виконання різноманітних робіт.' }}" />
+    @if(!empty($seoKeywords))
+        <meta name="keywords" content="{{ $seoKeywords }}" />
+    @endif
     <meta name="csrf-token" content="{{ csrf_token() }}">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">

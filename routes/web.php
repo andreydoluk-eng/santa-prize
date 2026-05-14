@@ -14,6 +14,7 @@ use App\Models\Service;
 use App\Support\FrontendCache;
 use Illuminate\Support\Facades\Route;
 use MoonShine\Laravel\Http\Middleware\Authenticate;
+use App\Http\Controllers\Admin\SeoGeneratorController;
 
 Route::get('/', HomeController::class)->name('home');
 
@@ -48,6 +49,10 @@ Route::middleware([Authenticate::class])->group(function () {
         return back();
     })->name('admin.update-settings');
 });
+
+Route::post('/admin/seo/generate', [SeoGeneratorController::class, 'generate'])
+    ->middleware(['moonshine'])
+    ->name('admin.seo.generate');
 
 Route::get('/sitemap.xml', function () {
     $sitemap = FrontendCache::remember('sitemap.xml', function (): string {
