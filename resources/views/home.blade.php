@@ -16,13 +16,13 @@
                 height="1080" class="w-full h-full object-cover" fetchpriority="high" loading="eager">
             <div class="absolute inset-0 bg-background/60"></div>
         </div>
-@php
-    $settings = \Illuminate\Support\Facades\Storage::exists('settings.json') 
-        ? json_decode(\Illuminate\Support\Facades\Storage::get('settings.json'), true) 
-        : [];
-    $hero_subtitle = $settings['hero_subtitle'] ?? 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт.';
-    $about_text = $settings['about_text'] ?? 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт — від земляних до висотних та дорожніх.';
-@endphp
+        @php
+            $settings = \Illuminate\Support\Facades\Storage::exists('settings.json')
+                ? json_decode(\Illuminate\Support\Facades\Storage::get('settings.json'), true)
+                : [];
+            $hero_subtitle = $settings['hero_subtitle'] ?? 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт.';
+            $about_text = $settings['about_text'] ?? 'Надаємо в оренду будівельної та спеціалізованої техніки для виконання різноманітних робіт — від земляних до висотних та дорожніх.';
+        @endphp
 
         <!-- Content -->
         <div class="relative z-10 container mx-auto px-6 md:px-12">
