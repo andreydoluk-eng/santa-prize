@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@push('head')
+    <link rel="preload" href="{{ asset('images/template/hero-bg.jpg') }}" as="image" fetchpriority="high">
+@endpush
+
 @section('content')
 
     <!-- removed hardcoded data -->
@@ -9,7 +13,7 @@
         <!-- Background -->
         <div class="absolute inset-0">
             <img src="{{ asset('images/template/hero-bg.jpg') }}" alt="Будівельна техніка на об'єкті" width="1920"
-                height="1080" class="w-full h-full object-cover">
+                height="1080" class="w-full h-full object-cover" fetchpriority="high" loading="eager">
             <div class="absolute inset-0 bg-background/60"></div>
         </div>
 @php
