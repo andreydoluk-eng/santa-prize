@@ -12,6 +12,7 @@ use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
+use MoonShine\Laravel\Fields\Slug;
 use MoonShine\UI\Components\Layout\Grid;
 use MoonShine\UI\Components\Layout\Column;
 use MoonShine\UI\Components\FlexibleRender;
@@ -34,8 +35,8 @@ final class ProjectFormPage extends FormPage
                         Box::make([
                             ID::make(),
                             Hidden::make('Сортування', 'sorting')->default(0),
-                            Text::make('Назва', 'title')->required(),
-                            Text::make('Slug', 'slug')->readonly(),
+                            Text::make('Назва', 'title')->reactive()->required(),
+                            Slug::make('Slug', 'slug')->from('title')->live()->readonly(),
                             Text::make('Ціна', 'price'),
 
                             TinyMce::make('Опис', 'description'),

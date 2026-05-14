@@ -13,6 +13,7 @@ use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Fields\Textarea;
+use MoonShine\Laravel\Fields\Slug;
 use Povly\MoonshineInterventionImage\Fields\InterventionImage;
 use MoonShine\UI\Components\Layout\Grid;
 use MoonShine\UI\Components\Layout\Column;
@@ -34,8 +35,8 @@ final class ServiceFormPage extends FormPage
                         Box::make([
                             ID::make(),
                             Hidden::make('Сортування', 'sorting')->default(0),
-                            Text::make('Назва', 'title')->required(),
-                            Text::make('Slug', 'slug')->readonly(),
+                            Text::make('Назва', 'title')->reactive()->required(),
+                            Slug::make('Slug', 'slug')->from('title')->live()->readonly(),
                             Text::make('Ціна', 'price'),
                             TinyMce::make('Опис', 'description'),
 
