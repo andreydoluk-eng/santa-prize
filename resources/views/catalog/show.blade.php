@@ -9,8 +9,8 @@
         {{ Breadcrumbs::render(Route::currentRouteName(), $item) }}
        
 
-        <div class="flex mt-12">
-            <div class="w-1/2">
+        <div class="flex flex-col md:flex-row mt-12 gap-8 md:gap-0">
+            <div class="w-full md:w-1/2">
                 @if($item->main_image)
                     <a href="{{ asset('storage/' . $item->main_image) }}" data-fslightbox="gallery-{{ $item->slug }}">
                         <img
@@ -37,8 +37,8 @@
                     </div>
                 @endif
             </div>
-            <div class="w-1/2 pl-12">
-                 <h1 class="text-3xl mb-6">{{ $item->title }}</h1>
+            <div class="w-full md:w-1/2 pl-0 md:pl-12">
+                 <h1 class="text-2xl md:text-3xl mb-6">{{ $item->title }}</h1>
                 @if($item->description)
                     <article class="prose max-w-none mb-8">{!! $item->description !!}</article>
                 @endif
