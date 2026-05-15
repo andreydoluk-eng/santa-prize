@@ -46,6 +46,12 @@ jobs:
           script: |
             cd /home/santapr/santa-prize.dp.ua/www
             php artisan storage:link
+            
+            # Fix permissions
+            find storage -type d -exec chmod 755 {} +
+            find storage -type f -exec chmod 644 {} +
+            chmod -R 775 storage bootstrap/cache
+            
             php artisan config:cache
             php artisan route:cache
             php artisan view:cache
