@@ -18,14 +18,14 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - name: 🧹 Clean server
+      - name: 🧹 Clean server (Safely)
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            rm -rf /home/santapr/santa-prize.dp.ua/www/*
+            find /home/santapr/santa-prize.dp.ua/www -maxdepth 1 ! -name 'storage' ! -name '.env' ! -name 'www' ! -name '.' -exec rm -rf {} +
 
       - name: 📤 Upload files
         uses: appleboy/scp-action@v0.1.7
@@ -36,3 +36,16 @@ jobs:
           port: 22
           source: "."
           target: "/home/santapr/santa-prize.dp.ua/www"
+
+      - name: 🚀 Post-deployment commands
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            cd /home/santapr/santa-prize.dp.ua/www
+            php artisan storage:link
+            php artisan config:cache
+            php artisan route:cache
+            php artisan view:cache
